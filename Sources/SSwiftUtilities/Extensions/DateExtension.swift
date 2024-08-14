@@ -7,9 +7,21 @@ public enum SSUDateError: String, Error {
 
 public enum DateFormat: String {
     case short = "MMMM dd"
+    case yearSlashMonth = "yyyy/MM"
 }
 
 public extension Date {
+    static func from(rawString: String, format: DateFormat) -> Date? {
+        return from(rawString: rawString, format: format.rawValue)
+    }
+    
+    static func from(rawString: String, format: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current
+        formatter.dateFormat = format
+        return formatter.date(from: rawString)
+    }
+    
     func string(withFormat format: DateFormat) -> String {
         return string(withFormat: format.rawValue)
     }
